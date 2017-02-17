@@ -1,11 +1,11 @@
-<!DOCTYPE html>  
+<!DOCTYPE html>
     <html>
     <head>
         <meta charset="utf-8" />
         <title>Gamedev Phaser Workshop - lesson 01: Initialize the framework</title>
         <style>* { padding: 0; margin: 0; }</style>
         <script src="js/phaser.min.js"></script>
-        
+
     </head>
     <body>
     <script>
@@ -42,19 +42,19 @@
             game.scale.pageAlignVertically = true;
             game.load.crossOrigin = 'anonymous';
             game.stage.backgroundColor = '#eee';
-            game.load.image('paddle', 'https://limmm.com/PhaseGames/img/paddle.png');
-            game.load.image('brick', 'https://limmm.com/PhaseGames/img/brick.png');
-            game.load.spritesheet('obstacle','https://limmm.com/PhaseGames/img/3.png', 59, 55);
-            game.load.spritesheet('ball', 'https://limmm.com/PhaseGames/img/wobble.png', 20, 20);
-            game.load.spritesheet('button', 'https://limmm.com/PhaseGames/img/1.png', 120, 40);
-            game.load.spritesheet('elf', 'https://limmm.com/PhaseGames/img/elf.png', 32, 48);
+            game.load.image('paddle', 'img/paddle.png');
+            game.load.image('brick', 'img/brick.png');
+            game.load.spritesheet('obstacle','img/3.png', 59, 55);
+            game.load.spritesheet('ball', 'img/wobble.png', 20, 20);
+            game.load.spritesheet('button', 'img/1.png', 120, 40);
+            game.load.spritesheet('elf', 'img/elf.png', 32, 48);
 
         }
         function create() {
             game.physics.startSystem(Phaser.Physics.NINJA);
             game.physics.startSystem(Phaser.Physics.ARCADE);
             //game.physics.ninja.gravity = 0;
-            game.physics.ninja.setBoundsToWorld();            
+            game.physics.ninja.setBoundsToWorld();
             game.physics.arcade.checkCollision.down = false;
             ball = game.add.sprite(game.world.width*0.5, game.world.height-35, 'ball');
 
@@ -69,8 +69,8 @@
             paddle = game.add.sprite(game.world.width*0.5, game.world.height-20, 'paddle');
             paddle.anchor.set(0.5,1);
             game.physics.enable(paddle, Phaser.Physics.ARCADE);
-            paddle.body.immovable = true;   
-                    
+            paddle.body.immovable = true;
+
             elf = game.add.sprite(game.world.width*0.2, game.world.height-50, 'elf');
             game.physics.ninja.enable(elf);
             elf.body.bounce = 0.5;
@@ -85,7 +85,7 @@
             obstacle = game.add.sprite(game.world.width*0.44, game.world.height*0.4, 'obstacle');
             game.physics.ninja.enable(obstacle);
             obstacle.anchor.set(0.5);
-            obstacle.body.immovable = true;  
+            obstacle.body.immovable = true;
             obstacle.visible = false;
             obstacle.body.gravityScale = 0;
 
@@ -108,11 +108,11 @@
 
             startButton = game.add.button(game.world.width*0.5, game.world.height*0.5, 'button', startGame, this, 1, 0, 2);
             startButton.anchor.set(0.5);
-              
+
 
         }
         function update() {
-            
+
             if (cursors.left.isDown)
             {
                 elf.body.moveLeft(150);
@@ -141,13 +141,13 @@
             game.physics.ninja.collide(elf, elfBricks, elfHitBricks);
             game.physics.ninja.collide(elf, obstacle, elfHitObs);
                 paddle.x = game.input.x || game.world.width*0.5;
-                
+
             }
-            
-            
+
+
         }
         function initBricks() {
-            headcount = 
+            headcount =
             brickInfo = {
                 width: 50,
                 height: 20,
@@ -163,7 +163,7 @@
             }
             elfBricks = game.add.group();
             bricks = game.add.group();
-            
+
             for(c=0; c<brickInfo.count.col; c++) {
                 for(r=0; r<brickInfo.count.row; r++) {
                     var brickX = (r*(brickInfo.width+brickInfo.padding))+brickInfo.offset.left;
@@ -172,7 +172,7 @@
                     if((count1 + count2)%3 === 0){
                         game.physics.enable(newBrick, Phaser.Physics.ARCADE);
                         newBrick.anchor.set(0.5);
-                        newBrick.body.immovable = true;                  
+                        newBrick.body.immovable = true;
                         bricks.add(newBrick);
                         count1++;
                     }
@@ -184,9 +184,9 @@
                         elfBricks.add(newBrick);
                         count2++;
                     }
-                    
-                    
-                    
+
+
+
                 }
             }
         }
@@ -232,23 +232,23 @@
                     lives2Text.setText('Master Lives: '+lives2);
                     life2LostText.visible = true;
                     elf.reset(game.world.width*0.2, game.world.height-50);
-                    life2LostText.visible = false;  
-                    elf.body.gravityScale += 2;               
+                    life2LostText.visible = false;
+                    elf.body.gravityScale += 2;
                 }
                 else {
                     alert('Master win!');
                     location.reload();
                 }
-            
+
 
         }
         function elfHitBricks(elf, brick){
-            
+
             var killTween = game.add.tween(brick.scale);
             killTween.to({x:0,y:0}, 5, Phaser.Easing.Linear.None);
             killTween.onComplete.addOnce(function(){
                 brick.kill();
-                
+
             }, this);
             killTween.start();
             score2 += 10;
@@ -256,7 +256,7 @@
             if(score2 === count2*10) {
                 alert('Elf won the game, congratulations!');
                 location.reload();
-            }        
+            }
         }
         function startGame() {
             startButton.destroy();
@@ -265,7 +265,7 @@
             playing = true;
         }
 
-        // 
+        //
         function handleRemoteImagesOnJSFiddle() {
             game.load.baseURL = 'https://rubyfrea.github.io/PhaseGames';
             game.load.crossOrigin = 'anonymous';
